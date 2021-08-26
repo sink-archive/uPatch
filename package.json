@@ -1,0 +1,25 @@
+{
+  "name": "upatch",
+  "version": "1.0.0",
+  "description": "a tiny, ultra simple patch tool",
+  "main": "index.js",
+  "scripts": {
+    "build": "flow-remove-types src/ -d out/",
+    "flow": "flow",
+    "dev": "\"$npm_execpath\" run build && node out/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yellowsink/uPatch.git"
+  },
+  "author": "Yellowsink",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/yellowsink/uPatch/issues"
+  },
+  "homepage": "https://github.com/yellowsink/uPatch#readme",
+  "devDependencies": {
+    "flow-bin": "^0.158.0",
+    "flow-remove-types": "^2.158.0"
+  }
+}
