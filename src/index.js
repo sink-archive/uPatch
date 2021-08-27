@@ -1,7 +1,9 @@
 // @flow
 
+const { args } = require('./args.js');
+
 function main(): void {
-    console.log("Hello, World!");
+    
 }
 
 

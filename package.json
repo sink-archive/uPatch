@@ -21,5 +21,8 @@
   "devDependencies": {
     "flow-bin": "^0.158.0",
     "flow-remove-types": "^2.158.0"
+  },
+  "dependencies": {
+    "yargs": "^17.1.1"
   }
 }
