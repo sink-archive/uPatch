@@ -5,16 +5,18 @@ const { getFilelist } = require("./filelists.js");
 const path = require("path");
 
 function main(): void {
-  if (args._[0] == "gen") {
-    gen(args.sourcedir, args.destdir, args["destoffset(optional)"]);
-  } else if (args._[0] == "apply") {
-    apply(args.sourcedir, args.destdir);
-  }
+    if (args._[0] == "gen") {
+        gen(args.sourcedir, args.destdir, args["destoffset(optional)"]);
+    } else if (args._[0] == "apply") {
+        apply(args.sourcedir, args.destdir);
+    }
 }
 
 function gen(sourceDir: string, destDir: string, offsetDir: string) {
-  console.log(getFilelist(sourceDir));
-  console.log(getFilelist(applyOffsetIfNecessary(destDir, offsetDir)));
+    let sourceFiles = getFilelist(sourceDir);
+    let destFiles = getFilelist(destDir);
+    console.log(sourceFiles);
+    console.log(getFilelist(applyOffsetIfNecessary(destDir, offsetDir)));
 }
 
 function applyOffsetIfNecessary(destDir: string, offsetDir: string) {
