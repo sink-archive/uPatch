@@ -3,35 +3,32 @@
 const fs = require("fs");
 const path = require("path");
 
-function recurse(dir: string): string[] {
-	let files: string[] = [];
+function getFilelist(dir: string): string[] {
+    let files: string[] = [];
 
-	fs.readdirSync(dir, { withFileTypes: true }).forEach(d => {
-		if (d.name === '.directory') {
-			return; // stupid .directory entry why does it exist??????? NODE WHYYYY
-		}
+    fs.readdirSync(dir, { withFileTypes: true }).forEach((d) => {
+        if (d.name === ".directory") {
+            return; // stupid .directory entry why does it exist??????? NODE WHYYYY
+        }
 
-		if (d.isDirectory()) {
-			if (typeof d.name == 'string') {
-				files = files.concat(recurse(path.join(dir, d.name)));
-			} else {
-				console.log("filename was buffer not string")
-			}
-		}
-		else {
-			if (typeof d.name == 'string') {
-				files.push(path.resolve(dir, d.name));
-			} else {
-				console.log("filename was buffer not string")
-			}
-		}
-	});
+        if (d.isDirectory()) {
+            if (typeof d.name == "string") {
+                files = files.concat(getFilelist(path.join(dir, d.name)));
+            } else {
+                console.log("filename was buffer not string");
+            }
+        } else {
+            if (typeof d.name == "string") {
+                files.push(path.resolve(dir, d.name));
+            } else {
+                console.log("filename was buffer not string");
+            }
+        }
+    });
 
-	return files;
+    return files;
 }
 
 module.exports = {
-	getFilelist: function (dir: string): string[] {
-		return recurse(dir);
-	},
+    getFilelist,
 };
