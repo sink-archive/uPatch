@@ -3,25 +3,35 @@
 const fs = require("fs");
 const path = require("path");
 
-// source: https://coderrocketfuel.com/article/recursively-list-all-the-files-in-a-directory-using-node-js
-function recurse(dirPath: string, arrayOfFiles: string[]) {
-    let files = fs.readdirSync(dirPath);
+function recurse(dir: string): string[] {
+	let files: string[] = [];
 
-    arrayOfFiles = arrayOfFiles || [];
+	fs.readdirSync(dir, { withFileTypes: true }).forEach(d => {
+		if (d.name === '.directory') {
+			return; // stupid .directory entry why does it exist??????? NODE WHYYYY
+		}
 
-    files.forEach(function (file) {
-        if (fs.statSync(dirPath + "/" + file).isDirectory()) {
-            arrayOfFiles = recurse(dirPath + "/" + file, arrayOfFiles);
-        } else {
-            arrayOfFiles.push(path.join(__dirname, dirPath, "/", file));
-        }
-    });
+		if (d.isDirectory()) {
+			if (typeof d.name == 'string') {
+				files = files.concat(recurse(path.join(dir, d.name)));
+			} else {
+				console.log("filename was buffer not string")
+			}
+		}
+		else {
+			if (typeof d.name == 'string') {
+				files.push(path.resolve(dir, d.name));
+			} else {
+				console.log("filename was buffer not string")
+			}
+		}
+	});
 
-    return arrayOfFiles;
+	return files;
 }
 
 module.exports = {
-    getFilelist: function (dir: string): string[] {
-        return recurse(dir, []);
-    },
+	getFilelist: function (dir: string): string[] {
+		return recurse(dir);
+	},
 };

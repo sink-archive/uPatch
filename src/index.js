@@ -2,7 +2,9 @@
 
 const args = require("./args.js");
 const { getFilelist } = require("./filelists.js");
+const { findMatchingFiles } = require("./filematcher.js");
 const path = require("path");
+const { readFileSync } = require("fs");
 
 function main() {
     switch (args.command) {
@@ -20,15 +22,17 @@ function main() {
     }
 }
 
+function applyOffsetIfNecessary(destDir: string, offsetDir: ?string) {
+    return offsetDir ? path.join(destDir, offsetDir) : destDir;
+}
+
 function gen(sourceDir: string, destDir: string, offsetDir: ?string) {
     let sourceFiles = getFilelist(sourceDir);
     let destFiles = getFilelist(destDir);
-    console.log(sourceFiles);
-    console.log(getFilelist(applyOffsetIfNecessary(destDir, offsetDir)));
-}
 
-function applyOffsetIfNecessary(destDir: string, offsetDir: ?string) {
-    return offsetDir ? path.join(destDir, offsetDir) : destDir;
+    let matchingFiles = findMatchingFiles(sourceFiles, destFiles, offsetDir);
+
+    console.log(matchingFiles);
 }
 
 function apply(sourceDir: string, destDir: string) {}
