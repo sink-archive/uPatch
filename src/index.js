@@ -1,6 +1,7 @@
 // @flow
 
-const { args } = require('./args.js');
+const { args }       = require('./args.js');
+const { getFilelist } = require('./filelists.js')
 
 function main(): void {
     if (args._[0] == "gen") {
@@ -12,7 +13,8 @@ function main(): void {
 }
 
 function gen(sourceDir: string, destDir: string, offsetDir: string) {
-    
+    console.log(getFilelist(sourceDir));
+    console.log(getFilelist(destDir));
 }
 
 function apply(sourceDir: string, destDir: string) {

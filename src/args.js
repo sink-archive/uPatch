@@ -34,4 +34,4 @@ const args = require('yargs')
 
 module.exports = {
     args
-}
+};
