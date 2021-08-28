@@ -4,7 +4,7 @@
     "description": "a tiny, ultra simple patch tool",
     "main": "index.js",
     "scripts": {
-        "build": "flow-remove-types src/ -d out/",
+        "build": "\"$npm_execpath\" run flow && flow-remove-types src/ -d out/",
         "flow": "flow",
         "dev": "\"$npm_execpath\" run build && node out/index.js"
     },

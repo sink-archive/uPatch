@@ -4,7 +4,7 @@ const args = require("./args.js");
 const { getFilelist } = require("./filelists.js");
 const path = require("path");
 
-function main(): void {
+function main() {
     switch (args.command) {
         case "gen":
             gen(args.sourceDir, args.destDir, args.destOffset);
