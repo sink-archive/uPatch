@@ -4,7 +4,8 @@
     "description": "a tiny, ultra simple patch tool",
     "main": "index.js",
     "scripts": {
-        "build": "\"$npm_execpath\" run flow && flow-remove-types src/ -d out/",
+        "build": "\"$npm_execpath\" run flow && babel src/ -d out/",
+        "babel": "babel",
         "flow": "flow",
         "dev": "\"$npm_execpath\" run build && node out/index.js"
     },
@@ -19,8 +20,10 @@
     },
     "homepage": "https://github.com/yellowsink/uPatch#readme",
     "devDependencies": {
-        "flow-bin": "^0.158.0",
-        "flow-remove-types": "^2.158.0"
+        "@babel/cli": "^7.14.8",
+        "@babel/core": "^7.15.0",
+        "@babel/preset-flow": "^7.14.5",
+        "flow-bin": "^0.158.0"
     },
     "dependencies": {
         "yargs": "^17.1.1"
