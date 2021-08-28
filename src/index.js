@@ -15,7 +15,7 @@ function main(): void {
             break;
 
         case undefined:
-            console.log("Please supply a command as an argument - see --help for more info");
+            console.log("Please supply a command - see --help for more info");
             break;
     }
 }
@@ -28,7 +28,7 @@ function gen(sourceDir: string, destDir: string, offsetDir: ?string) {
 }
 
 function applyOffsetIfNecessary(destDir: string, offsetDir: ?string) {
-    return offsetDir != null ? path.join(destDir, offsetDir) : destDir;
+    return offsetDir ? path.join(destDir, offsetDir) : destDir;
 }
 
 function apply(sourceDir: string, destDir: string) {}
