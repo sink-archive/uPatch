@@ -1,26 +1,34 @@
 // @flow
 
-const { args } = require("./args.js");
+const args = require("./args.js");
 const { getFilelist } = require("./filelists.js");
 const path = require("path");
 
 function main(): void {
-    if (args._[0] == "gen") {
-        gen(args.sourcedir, args.destdir, args["destoffset(optional)"]);
-    } else if (args._[0] == "apply") {
-        apply(args.sourcedir, args.destdir);
+    switch (args.command) {
+        case "gen":
+            gen(args.sourceDir, args.destDir, args.destOffset);
+            break;
+
+        case "apply":
+            apply(args.sourceDir, args.destDir);
+            break;
+
+        case undefined:
+            console.log("Please supply a command as an argument - see --help for more info");
+            break;
     }
 }
 
-function gen(sourceDir: string, destDir: string, offsetDir: string) {
+function gen(sourceDir: string, destDir: string, offsetDir: ?string) {
     let sourceFiles = getFilelist(sourceDir);
     let destFiles = getFilelist(destDir);
     console.log(sourceFiles);
     console.log(getFilelist(applyOffsetIfNecessary(destDir, offsetDir)));
 }
 
-function applyOffsetIfNecessary(destDir: string, offsetDir: string) {
-    return offsetDir != undefined ? path.join(destDir, offsetDir) : destDir;
+function applyOffsetIfNecessary(destDir: string, offsetDir: ?string) {
+    return offsetDir != null ? path.join(destDir, offsetDir) : destDir;
 }
 
 function apply(sourceDir: string, destDir: string) {}

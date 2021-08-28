@@ -1,4 +1,6 @@
-const args = require("yargs")
+// @flow
+
+const args: any = require("yargs")
     .scriptName("µPatch")
     .usage("$0 <cmd> [options]")
     .command(
@@ -35,6 +37,15 @@ const args = require("yargs")
     })
     .help().argv;
 
+const command: "gen" | "apply" | null = args._[0];
+const sourceDir: string = args.sourcedir;
+const destDir: string = args.destdir;
+const destOffset: ?string = args["destoffset(optional)"];
+
 module.exports = {
     args,
+    command,
+    sourceDir,
+    destDir,
+    destOffset
 };
