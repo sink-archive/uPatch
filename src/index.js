@@ -5,6 +5,7 @@ const { getFilelist } = require("./filelists.js");
 const { findMatchingFiles } = require("./filematcher.js");
 const path = require("path");
 const { readFileSync } = require("fs");
+const { diffFiles } = require("./filediffgenerator.js");
 
 function main() {
     switch (args.command) {
@@ -32,7 +33,8 @@ function gen(sourceDir: string, destDir: string, offsetDir: ?string) {
 
     let matchingFiles = findMatchingFiles(sourceFiles, destFiles, offsetDir);
 
-    console.log(matchingFiles);
+    let patches = diffFiles(sourceFiles, destFiles);
+    console.log(patches);
 }
 
 function apply(sourceDir: string, destDir: string) {}

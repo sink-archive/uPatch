@@ -4,11 +4,12 @@ specifiers:
   '@babel/cli': ^7.14.8
   '@babel/core': ^7.15.0
   '@babel/preset-flow': ^7.14.5
+  fast-myers-diff: ^3.0.1
   flow-bin: ^0.158.0
-  flow-remove-types: ^2.158.0
   yargs: ^17.1.1
 
 dependencies:
+  fast-myers-diff: 3.0.1
   yargs: 17.1.1
 
 devDependencies:
@@ -16,7 +17,6 @@ devDependencies:
   '@babel/core': 7.15.0
   '@babel/preset-flow': 7.14.5_@babel+core@7.15.0
   flow-bin: 0.158.0
-  flow-remove-types: 2.158.0
 
 packages:
 
@@ -702,6 +702,10 @@ packages:
     dev: true
     optional: true
 
+  /fast-myers-diff/3.0.1:
+    resolution: {integrity: sha512-e8p26utONwDXeSDkDqu4jaR3l3r6ZgQO2GWB178ePZxCfFoRPNTJVZylUEHHG6uZeRikL1zCc2sl4sIAs9c0UQ==}
+    dev: false
+
   /fill-range/4.0.0:
     resolution: {integrity: sha1-1USBHUKPmOsGpj3EAtJAPDKMOPc=}
     engines: {node: '>=0.10.0'}
@@ -725,21 +729,6 @@ packages:
     resolution: {integrity: sha512-Gk5md8XTwk/M+J5M+rFyS1LJfFen6ldY60jM9+meWixlKf4b0vwdoUO8R7oo471pze+GY+blrnskUeqLDxFJfg==}
     engines: {node: '>=0.10.0'}
     hasBin: true
-    dev: true
-
-  /flow-parser/0.158.0:
-    resolution: {integrity: sha512-0hMsPkBTRrkII/0YiG9ehOxFXy4gOWdk8RSRze5WbfeKAQpL5kC2K4BmumyTfU9o5gr7/llgElF3UpSSrjzQAA==}
-    engines: {node: '>=0.4.0'}
-    dev: true
-
-  /flow-remove-types/2.158.0:
-    resolution: {integrity: sha512-mLDU+B2LuiCg0KA9V0A5OdgI5evugWlHKqG+GLlNIrtOPEPO497p3PJAUxGD3SR+gJmtxCDdgL+qLZnw5op9bA==}
-    engines: {node: '>=4'}
-    hasBin: true
-    dependencies:
-      flow-parser: 0.158.0
-      pirates: 3.0.2
-      vlq: 0.2.3
     dev: true
 
   /for-in/1.0.2:
@@ -1154,11 +1143,6 @@ packages:
     dev: true
     optional: true
 
-  /node-modules-regexp/1.0.0:
-    resolution: {integrity: sha1-jZ2+KJZKSsVxLpExZCEHxx6Q7EA=}
-    engines: {node: '>=0.10.0'}
-    dev: true
-
   /node-releases/1.1.75:
     resolution: {integrity: sha512-Qe5OUajvqrqDSy6wrWFmMwfJ0jVgwiw4T3KqmbTcZ62qW0gQkheXYhcFM1+lOVcGUoRxcEcfyvFMAnDgaF1VWw==}
     dev: true
@@ -1229,13 +1213,6 @@ packages:
   /pify/4.0.1:
     resolution: {integrity: sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==}
     engines: {node: '>=6'}
-    dev: true
-
-  /pirates/3.0.2:
-    resolution: {integrity: sha512-c5CgUJq6H2k6MJz72Ak1F5sN9n9wlSlJyEnwvpm9/y3WB4E3pHBDT2c6PEiS1vyJvq2bUxUAIu0EGf8Cx4Ic7Q==}
-    engines: {node: '>= 4'}
-    dependencies:
-      node-modules-regexp: 1.0.0
     dev: true
 
   /posix-character-classes/0.1.1:
@@ -1544,10 +1521,6 @@ packages:
     resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
     dev: true
     optional: true
-
-  /vlq/0.2.3:
-    resolution: {integrity: sha512-DRibZL6DsNhIgYQ+wNdWDL2SL3bKPlVrRiBqV5yuMm++op8W4kGFtaQfCs4KEJn0wBZcHVHJ3eoywX8983k1ow==}
-    dev: true
 
   /wrap-ansi/7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}

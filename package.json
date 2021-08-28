@@ -26,6 +26,7 @@
         "flow-bin": "^0.158.0"
     },
     "dependencies": {
+        "fast-myers-diff": "^3.0.1",
         "yargs": "^17.1.1"
     }
 }
