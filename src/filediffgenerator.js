@@ -3,11 +3,6 @@
 const diff = require("fast-myers-diff");
 const fs = require("fs");
 
-function findClosestFile(path: string, candidates: string[]): string {
-    // TODO: write me
-    return "";
-}
-
 function diffStrings(source: string, dest: string) {
     let patch = diff.calcPatch(source, dest);
     return patch;
