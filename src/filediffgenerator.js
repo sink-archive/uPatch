@@ -5,7 +5,18 @@ const fs = require("fs");
 
 type generatorContent = [number, number, string];
 type fileDiffContent = generatorContent[];
-type fileDiff = [string, string, ?fileDiffContent];
+
+class FileDiff {
+    constructor(sp: string, dp: string, d: ?fileDiffContent) {
+        this.sourcePath = sp;
+        this.destPath = dp;
+        this.diff = d;
+    }
+
+    sourcePath: string;
+    destPath: string;
+    diff: ?fileDiffContent;
+}
 
 function diffStrings(
     source: string,
@@ -14,8 +25,8 @@ function diffStrings(
     return diff.calcPatch(source, dest);
 }
 
-const diffFiles = function (pairings: Map<string, string>): fileDiff[] {
-    let patches: fileDiff[] = [];
+const diffFiles = function (pairings: Map<string, string>, sroot: string, droot: string): FileDiff[] {
+    let patches: FileDiff[] = [];
 
     pairings.forEach((sp, dp) => {
         let source = fs.readFileSync(sp).toString();
@@ -31,7 +42,7 @@ const diffFiles = function (pairings: Map<string, string>): fileDiff[] {
             generatorContents = generatorContents ?? [];
             generatorContents.push(next.value);
         }
-        patches.push([sp, dp, generatorContents]);
+        patches.push(new FileDiff(sp, dp, generatorContents));
     });
 
     return patches;
@@ -39,4 +50,5 @@ const diffFiles = function (pairings: Map<string, string>): fileDiff[] {
 
 module.exports = {
     diffFiles,
+    FileDiff
 };
