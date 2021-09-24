@@ -3,31 +3,32 @@
 const diff = require("fast-myers-diff");
 const fs = require("fs");
 
-function diffStrings(source: string, dest: string) {
-    let patch = diff.calcPatch(source, dest);
-    return patch;
+type generatorContent = [number, number, string]
+type fileDiffContent = generatorContent[]
+type fileDiff = [string, string, ?fileDiffContent]
+
+function diffStrings(source: string, dest: string): Generator<generatorContent, any, any> {
+    return diff.calcPatch(source, dest);
 }
 
-const diffFiles = function (sourcePaths: string[], destPaths: string[]): ?[] {
-    let patches = [];
+const diffFiles = function (pairings: Map<string, string>): fileDiff[] {
+    let patches: fileDiff[] = [];
 
-    sourcePaths.forEach((sp, i) /* lmao dont do it like this */ => {
-        if (i >= destPaths.length) {
-            return; /* please stop breaking */
-        }
+    pairings.forEach((sp, dp) => {
         let source = fs.readFileSync(sp).toString();
-        let dest = fs.readFileSync(destPaths[i]).toString();
+        let dest = fs.readFileSync(dp).toString();
 
         let generator = diffStrings(source, dest);
-        let generatorContents = [];
+        let generatorContents: ?fileDiffContent = null;
         while (true) {
             let next = generator.next();
             if (next.done) {
                 break;
             }
+            generatorContents = generatorContents ?? []
             generatorContents.push(next.value);
         }
-        patches.push(generatorContents);
+        patches.push([sp, dp, generatorContents]);
     });
 
     return patches;

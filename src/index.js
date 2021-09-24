@@ -34,16 +34,16 @@ function gen(sourceDir: string, destDir: string, offsetDir: ?string) {
 
     //let matchingFiles = findMatchingFiles(sourceFiles, destFiles, offsetDir);
 
-    let [pairings, unMatchedSourceFiles] = pickFilePairings(
+    let [pairings, unmatchedFiles, removedFiles] = pickFilePairings(
         sourceFiles,
         destFiles
     );
-    console.log("FILE PAIRINGS:");
-    console.log(pairings);
-    console.log("UNMATCHED SOURCE FILES:");
-    console.log(unMatchedSourceFiles);
 
-    //let patches = diffFiles(sourceFiles, destFiles);
+    let patches = diffFiles(pairings);
+
+    console.log(patches);
+    console.log(unmatchedFiles)
+    console.log(removedFiles)
 }
 
 function apply(sourceDir: string, destDir: string) {}

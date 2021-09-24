@@ -21,13 +21,14 @@ function findClosestFile(path: string, candidates: string[]): string {
 function pickFilePairings(
     source: string[],
     dest: string[]
-): [Map<string, ?string>, string[]] {
+): [Map<string, string>, string[], string[]] {
     let pool = source;
-    let matches: Map<string, ?string> = new Map();
+    let matches: Map<string, string> = new Map();
+    let removed: string[] = []
 
     dest.forEach((path) => {
         if (pool.length == 0) {
-            matches.set(path, null);
+            removed.push(path)
         } else {
             let bestPairing = findClosestFile(path, pool);
             matches.set(path, bestPairing);
@@ -35,7 +36,7 @@ function pickFilePairings(
         }
     });
 
-    return [matches, pool];
+    return [matches, pool, removed];
 }
 
 function matchingPartsBackward<T>(a: T[], b: T[]): number {
