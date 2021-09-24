@@ -6,6 +6,7 @@ const path = require("path");
 const { readFileSync } = require("fs");
 const { diffFiles } = require("./filediffgenerator.js");
 const { pickFilePairings } = require("./pairpicker.js");
+const { serialize } = require("./diffSerializer.js");
 
 function main() {
     switch (args.command) {
@@ -38,9 +39,7 @@ function gen(sourceDir: string, destDir: string, offsetDir: ?string) {
 
     let patches = diffFiles(pairings);
 
-    console.log(patches);
-    console.log(unmatchedFiles)
-    console.log(addedFiles)
+    let serialized = serialize(patches, unmatchedFiles, addedFiles);
 }
 
 function apply(sourceDir: string, destDir: string) {}

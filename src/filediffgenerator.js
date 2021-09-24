@@ -3,11 +3,14 @@
 const diff = require("fast-myers-diff");
 const fs = require("fs");
 
-type generatorContent = [number, number, string]
-type fileDiffContent = generatorContent[]
-type fileDiff = [string, string, ?fileDiffContent]
+type generatorContent = [number, number, string];
+type fileDiffContent = generatorContent[];
+type fileDiff = [string, string, ?fileDiffContent];
 
-function diffStrings(source: string, dest: string): Generator<generatorContent, any, any> {
+function diffStrings(
+    source: string,
+    dest: string
+): Generator<generatorContent, any, any> {
     return diff.calcPatch(source, dest);
 }
 
@@ -25,7 +28,7 @@ const diffFiles = function (pairings: Map<string, string>): fileDiff[] {
             if (next.done) {
                 break;
             }
-            generatorContents = generatorContents ?? []
+            generatorContents = generatorContents ?? [];
             generatorContents.push(next.value);
         }
         patches.push([sp, dp, generatorContents]);
