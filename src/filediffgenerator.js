@@ -2,6 +2,7 @@
 
 const diff = require("fast-myers-diff");
 const fs = require("fs");
+const { makeRelative } = require("./util.js");
 
 type generatorContent = [number, number, string];
 type fileDiffContent = generatorContent[];
@@ -25,7 +26,11 @@ function diffStrings(
     return diff.calcPatch(source, dest);
 }
 
-const diffFiles = function (pairings: Map<string, string>, sroot: string, droot: string): FileDiff[] {
+const diffFiles = function (
+    pairings: Map<string, string>,
+    sroot: string,
+    droot: string
+): FileDiff[] {
     let patches: FileDiff[] = [];
 
     pairings.forEach((sp, dp) => {
@@ -42,7 +47,10 @@ const diffFiles = function (pairings: Map<string, string>, sroot: string, droot:
             generatorContents = generatorContents ?? [];
             generatorContents.push(next.value);
         }
-        patches.push(new FileDiff(sp, dp, generatorContents));
+
+        let relSp = makeRelative(sp, sroot);
+        let relDp = makeRelative(dp, droot);
+        patches.push(new FileDiff(relSp, relDp, generatorContents));
     });
 
     return patches;
@@ -50,5 +58,5 @@ const diffFiles = function (pairings: Map<string, string>, sroot: string, droot:
 
 module.exports = {
     diffFiles,
-    FileDiff
+    FileDiff,
 };

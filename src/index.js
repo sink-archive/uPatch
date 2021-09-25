@@ -39,7 +39,13 @@ function gen(sourceDir: string, destDir: string, offsetDir: ?string) {
 
     let patches = diffFiles(pairings, sourceDir, destDir);
 
-    let serialized = serialize(patches, unmatchedFiles, addedFiles);
+    let serialized = serialize(
+        patches,
+        unmatchedFiles,
+        addedFiles,
+        sourceDir,
+        destDir
+    );
 
     console.log(serialized);
 }
