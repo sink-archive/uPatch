@@ -31,22 +31,11 @@ function serialize(
 }
 
 function diffToString(diff: FileDiff): string {
-    let working = "";
-
-    working += diff.sourcePath + "\n";
-    working += diff.destPath + "\n";
-
-    if (diff.diff) {
-        diff.diff.forEach((d) => {
-            working += JSON.stringify(d);
-        });
-    }
-
-    return working;
+    return JSON.stringify(diff);
 }
 
 function stringToDiff(diff: string): FileDiff {
-    let split = diff.split("\n");
+    /* let split = diff.split("\n");
     let sourcePath = split[0];
     let destPath = split[1];
     let content: [number, number, string][] = [];
@@ -54,7 +43,8 @@ function stringToDiff(diff: string): FileDiff {
         content.push(JSON.parse(l));
     });
 
-    return new FileDiff(sourcePath, destPath, content);
+    return new FileDiff(sourcePath, destPath, content); */
+    return JSON.parse(diff);
 }
 
 module.exports = {
