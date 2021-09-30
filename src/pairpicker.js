@@ -1,5 +1,7 @@
 // @flow
 
+const path = require("path");
+
 function findClosestFile(path: string, candidates: string[]): string {
     let splitPath = path.split("/");
 
@@ -40,11 +42,15 @@ function pickFilePairings(
     let matches: Map<string, string> = new Map();
     let pool =
         offsetDir != null
-            ? source.filter((val) => isInDir(val, offsetDir))
+            ? source.filter((val) =>
+                  isInDir(path.resolve(val), path.resolve(offsetDir))
+              )
             : source;
     let added: string[] =
         offsetDir != null
-            ? source.filter((val) => !isInDir(val, offsetDir))
+            ? source.filter(
+                  (val) => !isInDir(path.resolve(val), path.resolve(offsetDir))
+              )
             : [];
 
     dest.forEach((path) => {
