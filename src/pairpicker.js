@@ -18,17 +18,38 @@ function findClosestFile(path: string, candidates: string[]): string {
     return splitCandidates[0].join("/");
 }
 
+function isInDir(filePath: string, dir: string): boolean {
+    let pathsplit = filePath.replace("\\", "/").split("/");
+    let dirsplit = dir.replace("\\", "/").split("/");
+
+    let contains = true;
+    dirsplit.forEach((val, i) => {
+        if (pathsplit[i] != val) {
+            contains = false;
+        }
+    });
+
+    return contains;
+}
+
 function pickFilePairings(
     source: string[],
-    dest: string[]
+    dest: string[],
+    offsetDir: ?string
 ): [Map<string, string>, string[], string[]] {
-    let pool = source;
     let matches: Map<string, string> = new Map();
-    let added: string[] = []
+    let pool =
+        offsetDir != null
+            ? source.filter((val) => isInDir(val, offsetDir))
+            : source;
+    let added: string[] =
+        offsetDir != null
+            ? source.filter((val) => !isInDir(val, offsetDir))
+            : [];
 
     dest.forEach((path) => {
         if (pool.length == 0) {
-            added.push(path)
+            added.push(path);
         } else {
             let bestPairing = findClosestFile(path, pool);
             matches.set(path, bestPairing);

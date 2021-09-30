@@ -11,7 +11,12 @@ const { serialize, writeDiff } = require("./diffSerializer.js");
 function main() {
     switch (args.command) {
         case "gen":
-            gen(args.sourceDir, args.destDir, args.destOffset, args.genOutputDir);
+            gen(
+                args.sourceDir,
+                args.destDir,
+                args.destOffset,
+                args.genOutputDir
+            );
             break;
 
         case "apply":
@@ -28,13 +33,19 @@ function applyOffsetIfNecessary(destDir: string, offsetDir: ?string) {
     return offsetDir ? path.join(destDir, offsetDir) : destDir;
 }
 
-function gen(sourceDir: string, destDir: string, offsetDir: ?string, outputDir: string) {
+function gen(
+    sourceDir: string,
+    destDir: string,
+    offsetDir: ?string,
+    outputDir: string
+) {
     let sourceFiles = getFilelist(sourceDir);
     let destFiles = getFilelist(destDir);
 
     let [pairings, unmatchedFiles, addedFiles] = pickFilePairings(
         sourceFiles,
-        destFiles
+        destFiles,
+        offsetDir != null ? path.join(sourceDir, offsetDir) : null
     );
 
     let patches = diffFiles(pairings, sourceDir, destDir);
