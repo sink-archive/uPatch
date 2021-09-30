@@ -6,12 +6,12 @@ const path = require("path");
 const { readFileSync } = require("fs");
 const { diffFiles } = require("./filediffgenerator.js");
 const { pickFilePairings } = require("./pairpicker.js");
-const { serialize } = require("./diffSerializer.js");
+const { serialize, writeDiff } = require("./diffSerializer.js");
 
 function main() {
     switch (args.command) {
         case "gen":
-            gen(args.sourceDir, args.destDir, args.destOffset);
+            gen(args.sourceDir, args.destDir, args.destOffset, args.genOutputDir);
             break;
 
         case "apply":
@@ -28,7 +28,7 @@ function applyOffsetIfNecessary(destDir: string, offsetDir: ?string) {
     return offsetDir ? path.join(destDir, offsetDir) : destDir;
 }
 
-function gen(sourceDir: string, destDir: string, offsetDir: ?string) {
+function gen(sourceDir: string, destDir: string, offsetDir: ?string, outputDir: string) {
     let sourceFiles = getFilelist(sourceDir);
     let destFiles = getFilelist(destDir);
 
@@ -47,7 +47,7 @@ function gen(sourceDir: string, destDir: string, offsetDir: ?string) {
         destDir
     );
 
-    console.log(serialized);
+    writeDiff(serialized, outputDir);
 }
 
 function apply(sourceDir: string, destDir: string) {}

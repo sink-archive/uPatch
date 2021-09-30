@@ -4,7 +4,7 @@ const args: any = require("yargs")
     .scriptName("µPatch")
     .usage("$0 <cmd> [options]")
     .command(
-        "gen [sourcedir] [destdir] [destoffset (optional)]",
+        "gen [sourcedir] [destdir] [outputdir] [destoffset (optional)]",
         "generate a diff",
         (yargs) => {
             yargs.positional("sourcedir", {
@@ -15,6 +15,11 @@ const args: any = require("yargs")
             yargs.positional("destdir", {
                 type: "string",
                 desc: "the directory to use to generate the diff",
+            });
+
+            yargs.positional("outputdir", {
+                type: "string",
+                desc: "where to save the diff to",
             });
 
             yargs.positional("destoffset", {
@@ -41,11 +46,13 @@ const command: "gen" | "apply" | null = args._[0];
 const sourceDir: string = args.sourcedir;
 const destDir: string = args.destdir;
 const destOffset: ?string = args["destoffset(optional)"];
+const genOutputDir: string = args.outputdir;
 
 module.exports = {
     args,
     command,
     sourceDir,
     destDir,
-    destOffset
+    destOffset,
+    genOutputDir,
 };
